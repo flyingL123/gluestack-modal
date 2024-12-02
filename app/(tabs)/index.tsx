@@ -4,53 +4,70 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useState } from 'react';
+import { Center } from '@/components/ui/center';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Heading } from '@/components/ui/heading';
+import { CloseIcon, Icon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 
 export default function HomeScreen() {
+  const [showModal, setShowModal] = useState(false)
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <Center className="h-[300px]">
+      <Button onPress={() => setShowModal(true)}>
+        <ButtonText>Show Modal</ButtonText>
+      </Button>
+      <Modal
+        isOpen={showModal}
+        onClose={() => {
+          setShowModal(false)
+        }}
+        size="md"
+      >
+        <ModalBackdrop />
+        <ModalContent>
+          <ModalHeader>
+            <Heading size="md" className="text-typography-950">
+              Invite your team
+            </Heading>
+            <ModalCloseButton>
+              <Icon
+                as={CloseIcon}
+                size="md"
+                className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900"
+              />
+            </ModalCloseButton>
+          </ModalHeader>
+          <ModalBody>
+            <Text size="sm" className="text-typography-500">
+              Elevate user interactions with our versatile modals. Seamlessly
+              integrate notifications, forms, and media displays. Make an impact
+              effortlessly.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="outline"
+              action="secondary"
+              onPress={() => {
+                setShowModal(false)
+              }}
+            >
+              <ButtonText>Cancel</ButtonText>
+            </Button>
+            <Button
+              onPress={() => {
+                setShowModal(false)
+              }}
+            >
+              <ButtonText>Explore</ButtonText>
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Center>
   );
 }
 
